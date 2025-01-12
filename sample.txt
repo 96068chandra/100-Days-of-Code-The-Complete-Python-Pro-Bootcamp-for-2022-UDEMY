@@ -1,0 +1,28 @@
+2. Data Cleaning
+Missing Value Handling
+
+Identifying Missing Values: We first used a technique called data.isnull().sum() to scan the entire dataset and count the number of missing entries in each column. This helped us understand where the gaps were.
+Imputation: To address missing values, we used a method called "imputation," which involves intelligently filling in the gaps. Specifically, we replaced missing values in the 'bmi' column (body mass index) with the average BMI of all other individuals in the dataset. This is a common and effective approach for numerical data when the missing values are relatively few.
+Justification: We chose this strategy because using the average helps maintain the overall distribution of BMI values without introducing bias. Other imputation methods, like using a fixed value (e.g., 0), could distort the data and affect the analysis.
+Outlier Handling
+
+Outlier Detection: Outliers are data points that are significantly different from the rest. We used the Interquartile Range (IQR) method to identify them. The IQR is the difference between the 75th percentile (Q3) and the 25th percentile (Q1) of the data. Any value that falls below Q1 - 1.5 * IQR or above Q3 + 1.5 * IQR is considered an outlier.
+Outlier Treatment: We removed outliers from the dataset.
+Justification: Outliers can heavily influence the results of our analysis, leading to inaccurate predictions or misleading insights. By removing them, we ensure that our models focus on the typical patterns in the data and avoid being skewed by extreme values.
+3. Data Transformation
+Normalization/Scaling
+
+Normalization Technique: We used a technique called MinMaxScaler to normalize the numerical features (age, average glucose level, and BMI). This method scales all values to a range between 0 and 1.
+Benefits: Normalization ensures that all features have a similar influence on the model, regardless of their original scale. This is especially important when features have very different ranges (e.g., age in years vs. glucose levels in mg/dL). Normalization can prevent features with larger values from dominating the model and can improve the performance and stability of the analysis.
+Discretization
+
+Discretization Method: We used a technique called pd.qcut to discretize the 'age' feature. This method divides the data into equal-sized groups based on quantiles (e.g., quartiles). It essentially creates age categories (e.g., young, middle-aged, older).
+Purpose: Discretization can improve model interpretability by grouping similar values together. It also allows us to potentially capture non-linear relationships between age and stroke risk.
+Encoding Categorical Features
+
+Encoding Method: We used one-hot encoding to transform categorical features (gender, marital status, work type, residence type, and smoking status) into a numerical format. One-hot encoding creates a new binary (0/1) column for each category within a feature. For example, the 'gender' feature would be split into two columns: 'gender_Male' and 'gender_Female'.
+Justification: Machine learning models typically work with numerical data. One-hot encoding converts categorical variables into a format that the model can understand and use for analysis.
+Feature Engineering
+
+New Feature: We created a new feature called 'is_diabetic' based on the normalized average glucose level. If the normalized glucose level was above a certain threshold (0.6), the individual was labeled as 'diabetic' (1), otherwise 'non-diabetic' (0).
+Rationale: Diabetes is a known risk factor for stroke. By creating this new feature, we explicitly included this important medical information in our analysis, potentially improving the model's ability to predict stroke risk.
